@@ -39,6 +39,35 @@
         <button type="submit">공지 추가</button>
     </form>
 
+    <div class="modal fade" id="anonymous" tabindex="-1" role="dialog" aria-labelledby="anonymousModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="anonymousModalLabel">
+                  익명 게시판
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="anonymousForm">
+                  <div class="form-group">
+                    <label for="anonymoustitle">익명 게시판 제목</label>
+                    <input type="text" class="form-control" id="anonymousTitle" placeholder="게시할 제목을 입력하세요" />
+                  </div>
+                  <div class="form-group">
+                    <label for="anonymouscontent">내용</label>
+                    <input type="text" class="form-control" id="anonymousContent" placeholder="게시할 내용을 입력하세요"></input>
+                  </div>
+                  <button type="submit" class="btn btn-primary">제출</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
     <script type="module">
         import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
@@ -60,6 +89,7 @@
         const db = getDatabase();
         const assignmentRef = ref(db, 'assignment');
         const noticeRef = ref(db, 'notice');
+        const anonymousRef = ref(db, 'anonymous');
 
         // 폼 제출 시 Firebase에 데이터 추가
         document.getElementById('assignmentForm').addEventListener('submit', function(event) {
@@ -116,6 +146,29 @@
                     console.error('공지 등록 중 오류 발생: ', error);
                 });
         });
+
+    document.getElementById('anonymousForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const title = document.getElementById('anonymousTitle').value;
+      const content = document.getElementById('anonymousContent').value;
+
+      const newAnonymous = {
+        title: title,
+        content: content
+      };
+
+      // Firebase에 데이터 추가
+       push(anonymousRef, newAnonymous)
+        .then(() => {
+          alert('과제가 성공적으로 등록되었습니다.');
+          // 폼 초기화
+          document.getElementById('anonymousForm').reset();
+        })
+        .catch((error) => {
+          console.error('과제 등록 중 오류 발생: ', error);
+        });
+    });
     </script>
 </body>
 </html>
