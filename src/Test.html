@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+<!-- 과제, 공지 디비 등록 테스트 완료 -->
+
+<html>
+<head>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
+</head>
+<body>
+    <h1>Firebase Realtime Database 데이터 추가</h1>
+
+    <!-- Assignment Form -->
+    <form id="assignmentForm">
+        <h2>과제 추가</h2>
+        <input type="text" id="title" placeholder="제목">
+        <input type="text" id="author" placeholder="작성자">
+        <input type="text" id="datetime" placeholder="날짜">
+        <textarea id="content" placeholder="내용"></textarea>
+        <button type="submit">과제 추가</button>
+    </form>
+
+    <!-- Notice Form -->
+    <form id="noticeForm">
+        <h2>공지 추가</h2>
+        <input type="text" id="noticeTitle" placeholder="제목">
+        <input type="text" id="noticeAuthor" placeholder="작성자">
+        <input type="text" id="noticeDatetime" placeholder="날짜">
+        <textarea id="noticeContent" placeholder="내용"></textarea>
+        <button type="submit">공지 추가</button>
+    </form>
+
+    <script type="module">
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+
+        // Firebase 설정
+        const firebaseConfig = {
+            apiKey: "AIzaSyBzMk-tFPzjkxTNRqBCmHBi8CKZpT8-VBk",
+            authDomain: "noticetest-f3142.firebaseapp.com",
+            projectId: "noticetest-f3142",
+            storageBucket: "noticetest-f3142.appspot.com",
+            messagingSenderId: "797062143332",
+            appId: "1:797062143332:web:dcec5ff8441640529bae71"
+        };
+
+        // Firebase 초기화
+        const app = initializeApp(firebaseConfig);
+
+        // Firebase Realtime Database 참조 생성
+        const db = getDatabase();
+        const assignmentRef = ref(db, 'assignment');
+        const noticeRef = ref(db, 'notice');
+
+        // 폼 제출 시 Firebase에 데이터 추가
+        document.getElementById('assignmentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            const datetime = document.getElementById('datetime').value;
+            const content = document.getElementById('content').value;
+
+            const newAssignment = {
+                title: title,
+                author: author,
+                datetime: datetime,
+                content: content
+            };
+
+            // Firebase에 데이터 추가
+            push(assignmentRef, newAssignment)
+                .then(() => {
+                    alert('과제가 성공적으로 등록되었습니다.');
+                    // 폼 초기화
+                    document.getElementById('assignmentForm').reset();
+                })
+                .catch((error) => {
+                    console.error('과제 등록 중 오류 발생: ', error);
+                });
+        });
+
+        // 폼 제출 시 Firebase에 데이터 추가
+        document.getElementById('noticeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('noticeTitle').value;
+            const author = document.getElementById('noticeAuthor').value;
+            const datetime = document.getElementById('noticeDatetime').value;
+            const content = document.getElementById('noticeContent').value;
+
+            const newNotice = {
+                title: title,
+                author: author,
+                datetime: datetime,
+                content: content
+            };
+
+            // Firebase에 데이터 추가
+            push(noticeRef, newNotice)
+                .then(() => {
+                    alert('공지가 성공적으로 등록되었습니다.');
+                    // 폼 초기화
+                    document.getElementById('noticeForm').reset();
+                })
+                .catch((error) => {
+                    console.error('공지 등록 중 오류 발생: ', error);
+                });
+        });
+    </script>
+</body>
+</html>

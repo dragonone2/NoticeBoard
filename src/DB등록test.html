@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과제 등록 페이지</title>
+</head>
+<body>
+    <h1>과제 등록</h1>
+    <form id="assignmentForm">
+        <div>
+            <label for="title">제목:</label>
+            <input type="text" id="title" required>
+        </div>
+        <div>
+            <label for="author">작성자:</label>
+            <input type="text" id="author" required>
+        </div>
+        <div>
+            <label for="datetime">날짜와 시간:</label>
+            <input type="text" id="datetime" required>
+        </div>
+        <div>
+            <label for="content">내용:</label>
+            <textarea id="content" required></textarea>
+        </div>
+        <div>
+            <button type="submit">등록</button>
+        </div>
+    </form>
+
+    <!-- Firebase 스크립트 추가 -->
+    <script type="module" src="DBtest.js"></script>
+</body>
+</html>

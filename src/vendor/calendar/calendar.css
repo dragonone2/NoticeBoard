@@ -1,0 +1,181 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  /* box-sizing: border-box; */
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.calendar {
+  width: 100%;
+  margin: auto;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.year-month {
+  font-size: 24px;
+}
+.nav {
+  display: flex;
+  border: 1px solid #333333;
+  border-radius: 5px;
+}
+.nav-btn {
+  width: 28px;
+  height: 30px;
+  border: none;
+  font-size: 16px;
+  line-height: 34px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.go-today {
+  width: 75px;
+  border-left: 1px solid #333333;
+  border-right: 1px solid #333333;
+}
+.days {
+  display: flex;
+  margin: 25px 0 10px;
+}
+.day {
+  width: calc(100% / 7);
+  text-align: center;
+}
+.dates {
+  display: flex;
+  flex-flow: row wrap;
+  height: fit-content;
+  border-top: 1px solid #333333;
+  border-right: 1px solid #333333;
+  font-weight: 550;
+  border-color: #0051ff;
+}
+.date {
+  width: calc(100% / 7);
+  padding: 15px;
+  padding-bottom: 15px;
+  text-align: right;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #333333;
+  border-color: #0051ff;
+  background-color: #eaf4ff;
+}
+.day:nth-child(7n + 1),
+.date:nth-child(7n + 1) {
+  color: #ff0000;
+}
+.day:nth-child(7n),
+.date:nth-child(7n) {
+  color: #0051ff;
+}
+.other {
+  opacity: 0.3;
+}
+.today {
+  position: relative;
+  color: white;
+  z-index: 0;
+  /* background-color: transparent !important; */
+}
+.today::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  content: "";
+}
+
+
+/* modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 10%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modal-contents {
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 20%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+}
+.modal-contents h2 {
+  margin-bottom: 20px;
+  width: 100%;
+}
+.modal-contents label {
+  display: block;
+  margin-top: 20px;
+  width: 100%;
+}
+.modal-contents input[type="text"] {
+  width: 100%;
+  padding: 5px; /* Add some padding inside text fields */
+  margin-bottom: 20px;
+}
+.modal-contents input[type="submit"],
+.modal-contents button {
+  display: block; /* Make buttons take up a whole line */
+  margin-top: 20px;
+  border-radius: 5px;
+  padding: 5px;
+}
+.modal-contents .button-container {
+  display: flex; /* Make the container a flex container */
+  justify-content: space-between; /* Distribute space evenly between the buttons */
+  align-content: center;
+}
+.modal-contents input[type='submit'],
+.modal-contents button.close {
+  width: calc(50% - 10px); /* Make each button take up half the width of the container, minus a little bit for margin */
+  border-style: solid; /* 테두리 스타일 */
+  border-width: thin; /* 테두리 두께 */
+  font-size:1em; /* 글자 크기 */
+  background-color: red;
+}
+.close {
+  color: #aaa;
+}
+
+
+/* schedule */
+.schedule-item {
+  margin-bottom: 10px;
+}
+
+.schedule-date {
+  font-weight: bold;
+}
+
+.schedule-description {
+  margin-left: 20px;
+  white-space: pre-wrap;
+}
+
+.event-description {
+  font-weight: bold; /* 굵은 글씨체 적용 */
+  margin-left: 20px; /* 원하는 크기로 조절 */
+}

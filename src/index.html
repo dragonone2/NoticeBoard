@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@4.1.6/css/sb-admin-2.min.css" rel="stylesheet" />
+  <title>SB Admin 2 - Tables</title>
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet" />
+    <link rel="stylesheet" href="./vendor/calendar/calendar.css" />
+    <link rel="stylesheet" href="./vendor/schedule/schedule.css" />
+  <!-- Custom styles for this template -->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this page -->
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- 사이드바 시작 -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0" />
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+          aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Pages</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Login Screens:</h6>
+            <a class="collapse-item" href="login.html">Login</a>
+            <a class="collapse-item" href="register.html">Register</a>
+            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+            <div class="collapse-divider"></div>
+            <h6 class="collapse-header">Other Pages:</h6>
+            <a class="collapse-item" href="404.html">404 Page</a>
+            <a class="collapse-item" href="blank.html">Blank Page</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Charts</span></a>
+      </li>
+
+      <!-- Nav Item - Tables -->
+      <li class="nav-item active">
+        <a class="nav-link" href="tables.html">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Tables</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block" />
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+    </ul>
+    <!-- 사이드바 종료 -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <!-- Sidebar Toggle (Topbar) -->
+          <form class="form-inline">
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+              <i class="fa fa-bars"></i>
+            </button>
+          </form>
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                aria-label="Search" aria-describedby="basic-addon2" />
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- 상단바 시작 -->
+          <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <!-- 상단바 종료 -->
+
+        <div class="container-fluid">
+          <div class="row">
+           <!-- Area Chart -->
+            <div class="col-md-5">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Calendar</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="calendar">
+                    <div class="header">
+                      <div class="year-month"></div>
+                      <div class="nav">
+                        <button class="nav-btn go-prev" onclick="prevMonth()">&lt;</button>
+                        <button class="nav-btn go-today" onclick="goToday()">오늘로</button>
+                        <button class="nav-btn go-next" onclick="nextMonth()">&gt;</button>
+                      </div>
+                    </div>
+                    <div class="main">
+                      <div class="days">
+                        <div class="day">일</div>
+                        <div class="day">월</div>
+                        <div class="day">화</div>
+                        <div class="day">수</div>
+                        <div class="day">목</div>
+                        <div class="day">금</div>
+                        <div class="day">토</div>
+                      </div>
+                      <div class="dates"></div>
+                    </div>
+                  </div>
+                  <div id="modal" class="modal">
+                    <div class="modal-contents">
+                      <h2>일정 등록</h2>
+                      <form id="event-form">
+                        <label for="event-date">날짜:</label><br />
+                        <input type="text" id="event-date" name="event-date" readonly />
+                        <label for="event-description">일정:</label><br />
+                        <input class="schedule" type="text" id="event-description" placeholder="일정을 입력하세요." />
+                        <div class="button-container">
+                          <button type="submit" class="schedule">등록</button>
+                          <button type="button" class="schedule" id="cancelBtn">취소</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <script src="./vendor/calendar/calendar.js"></script>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Pie Chart -->
+            <div class="col-md-3">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">Schedule</h6>
+                  <div class="dropdown no-arrow">
+                    <a
+                      class="dropdown-toggle"
+                      href="#"
+                      role="button"
+                      id="dropdownMenuLink"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <i
+                        class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"
+                      ></i>
+                    </a>
+                    <div
+                      class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                      aria-labelledby="dropdownMenuLink"
+                    >
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#"
+                        >Something else here</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- replacement of Card Body TO SCHEDULE -->
+                <div class="card-body">
+                  <div
+                    id="schedule-list"
+                    class="schedule-list"
+                    style="height: 368px"
+                  ></div>
+                 
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-md-4">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Local Chat</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="wrapper">
+                    <div class="user-container">
+                        <label for="nickname">대화명</label>
+                        <input type="text" id="nickname">
+                    </div>
+                    <div class="display-container">
+                        <ul class="chatting-list">
+                           
+                        </ul>
+                    </div>
+                    <div class="input-container">
+                        <span>
+                            <input type="text" class="chatting-input">
+                            <button class="send-button">전송</button>
+                        </span>
+            
+                    </div>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+
+        
+
+        <!-- 공지사항 양식 -->
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-8">
+              <!-- 공지사항 -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>공지 제목</th>
+                          <th>작성자</th>
+                          <th>공지일</th>
+                          <th>공지 내용</th>
+                        </tr>
+                      </thead>
+                      <tbody id="noticeData" data-toggle="modal" data-target="#noticeModal1">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <!-- 공지사항 종료 -->
+        
+              <!-- 과제란 양식 -->
+            <div class="col-md-4">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">과제</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>과제명</th>
+                          <th>작성자</th>
+                          <th>마감 일자</th>
+                          <th>과제 내용</th>
+                        </tr>
+                      </thead>
+                      <tbody id="assignmentData" data-toggle="modal" data-target="#assignmentModal1">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 과제란 양식 종료 -->
+
+
+        
+          
+
+        <!-- 익명 게시판 양식 -->
+        <div class="container-fluid">
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">익명 게시판</h6>
+                <button id="openAnonymousModal" class="btn btn-primary">+</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>제목</th>
+                      <th>내용</th>
+                    </tr>
+                  </thead>
+                  <tbody id="anonymousData" data-toggle="modal" data-target="#anonymous">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+ 
+
+        <!-- 공지사항 모달 창 시작 -->
+        <div class="modal fade" id="noticeModal1" tabindex="-1" role="dialog" aria-labelledby="noticeModal1Label"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="noticeModal1Label">공지 사항</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table style="width: 100%; border-collapse: collapse">
+                  <tr>
+                    <th style="border: 1px solid black; padding: 10px">
+                      작성자
+                    </th>
+                    <td style="border: 1px solid black; padding: 10px">
+                      노영훈
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="border: 1px solid black; padding: 10px">
+                      공지 제목
+                    </th>
+                    <td style="border: 1px solid black; padding: 10px">
+                      시험 일정 공지
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="border: 1px solid black; padding: 10px">
+                      공지 내용
+                    </th>
+                    <td style="border: 1px solid black; padding: 10px">
+                      이번 시험은 10월10일입니다.
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 모달 창 종료 -->
+
+        <!-- 과제 제출 모달 창 시작 -->
+        <div class="modal fade" id="assignmentModal1" tabindex="-1" role="dialog" aria-labelledby="assignmentModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="assignmentModalLabel">
+                  과제 제출 페이지
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!-- 과제 제출 페이지 양식 -->
+                <form>
+                  <div class="form-group">
+                    <label for="assignmentTitle">과제 제목</label>
+                    <input type="text" class="form-control" id="assignmentTitle" placeholder="과제 제목을 입력하세요" />
+                  </div>
+                  <div class="form-group">
+                    <label for="assignmentDescription">과제 설명</label>
+                    <textarea class="form-control" id="assignmentDescription" rows="3"
+                      placeholder="과제 설명을 입력하세요"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="fileUpload">파일 첨부</label>
+                    <input type="file" class="form-control-file" id="fileUpload" />
+                  </div>
+                  <button type="submit" class="btn btn-primary">제출</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 모달 창 종료 -->
+
+        <!-- 익명 게시판 등록 모달 창 시작 -->
+        <div class="modal fade" id="anonymous" tabindex="-1" role="dialog" aria-labelledby="anonymousModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="anonymousModalLabel">
+                  익명 게시판
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="anonymousForm">
+                  <div class="form-group">
+                    <label for="anonymoustitle">익명 게시판 제목</label>
+                    <input type="text" class="form-control" id="anonymousTitle" placeholder="게시할 제목을 입력하세요" />
+                  </div>
+                  <div class="form-group">
+                    <label for="anonymouscontent">내용</label>
+                    <input type="text" class="form-control" id="anonymousContent" placeholder="게시할 내용을 입력하세요"></input>
+                  </div>
+                  <button type="submit" class="btn btn-primary">제출</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 모달 창 종료 -->
+
+        <!-- 익명 게시판 자세히보기 모달 창 시작 -->
+        <div class="modal fade" id="anonymous1" tabindex="-1" role="dialog" aria-labelledby="anonymousModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="anonymousModalLabel">
+                  익명 게시판
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="anonymousForm">
+                  <div class="form-group">
+                    <label for="anonymoustitle">익명 게시판 제목</label>
+                    <input type="text" class="form-control" id="anonymousTitle" placeholder="게시할 제목을 입력하세요" />
+                  </div>
+                  <div class="form-group">
+                    <label for="anonymouscontent">내용</label>
+                    <input type="text" class="form-control" id="anonymousContent" placeholder="게시할 내용을 입력하세요"></input>
+                  </div>
+                  <button type="submit" class="btn btn-primary">제출</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 모달 창 종료 -->
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Select "Logout" below if you are ready to end your current session.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancel
+          </button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
+
+  
+  <!-- Chatting scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/chat.js"></script>
+  <!-- Calender scripts -->
+  <script src="./vendor/calendar/calendar.js"></script>
+
+  <script type="module">
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+
+    // Firebase 설정
+    const firebaseConfig = {
+      apiKey: "AIzaSyBzMk-tFPzjkxTNRqBCmHBi8CKZpT8-VBk",
+      authDomain: "noticetest-f3142.firebaseapp.com",
+      projectId: "noticetest-f3142",
+      storageBucket: "noticetest-f3142.appspot.com",
+      messagingSenderId: "797062143332",
+      appId: "1:797062143332:web:dcec5ff8441640529bae71"
+    };
+
+    // Firebase 초기화
+    const app = initializeApp(firebaseConfig);
+
+    // Firebase Realtime Database 참조 생성
+    const db = getDatabase();
+    const assignmentRef = ref(db, 'assignment');
+    const noticeRef = ref(db, 'notice');
+    const anonymousRef = ref(db, 'anonymous');
+
+    // DB 입력 폼
+    document.getElementById('anonymousForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const title = document.getElementById('anonymousTitle').value;
+      const content = document.getElementById('anonymousContent').value;
+
+      const newAnonymous = {
+        title: title,
+        content: content
+      };
+
+      // Firebase에 데이터 추가
+      push(anonymousRef, newAnonymous)
+        .then(() => {
+          alert('과제가 성공적으로 등록되었습니다.');
+          // 폼 초기화
+          document.getElementById('anonymousForm').reset();
+        })
+        .catch((error) => {
+          console.error('과제 등록 중 오류 발생: ', error);
+        });
+    });
+
+    // 함수를 사용하여 데이터를 표에 추가
+    function addDataToTable(data, tableId) {
+      const dataContainer = document.getElementById(tableId);
+      dataContainer.innerHTML = ''; // 기존 내용 지우기
+
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const rowData = data[key];
+          const row = document.createElement('tr');
+          if (tableId === 'anonymousData') {
+            row.innerHTML = `
+                          <td>${rowData.title}</td>
+                          <td>${rowData.content}</td>
+                      `;
+          } else {
+            row.innerHTML = `
+                          <td>${rowData.title}</td>
+                          <td>${rowData.author}</td>
+                          <td>${rowData.datetime}</td>
+                          <td>${rowData.content}</td>
+                      `;
+          }
+          dataContainer.appendChild(row);
+
+          if (tableId === 'assignmentData') {
+            // 공지사항 제목을 assignmentTitle 요소에 설정
+            document.getElementById('assignmentTitle').textContent = rowData.title;
+          }
+        }
+      }
+    }
+
+    onValue(assignmentRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        addDataToTable(data, 'assignmentData');
+      } else {
+        console.log('Assignment 데이터가 없습니다.');
+      }
+    });
+
+    onValue(noticeRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        addDataToTable(data, 'noticeData');
+      } else {
+        console.log('Notice 데이터가 없습니다.');
+      }
+    });
+
+    onValue(anonymousRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        addDataToTable(data, 'anonymousData');
+      } else {
+        console.log('anonymous 데이터가 없습니다.');
+      }
+    });
+
+    document.getElementById('openAnonymousModal').addEventListener('click', function () {
+      // 모달 열기
+      const modal = new bootstrap.Modal(document.getElementById('anonymous1'));
+      modal.show();
+    });
+  </script>
+
+</body>
+
+</html>
